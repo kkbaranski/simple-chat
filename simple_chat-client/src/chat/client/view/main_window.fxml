@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<GridPane alignment="CENTER" hgap="10.0" vgap="10.0" xmlns:fx="http://javafx.com/fxml/1"
+          xmlns="http://javafx.com/javafx/2.2" fx:controller="chat.client.view.ChatClientController">
+    <children>
+        <SplitPane dividerPositions="0.8" focusTraversable="true" GridPane.columnIndex="0" GridPane.rowIndex="0">
+            <items>
+                <AnchorPane>
+                    <children>
+                        <SplitPane dividerPositions="0.99" focusTraversable="true" orientation="VERTICAL"
+                                   AnchorPane.bottomAnchor="-1.0" AnchorPane.leftAnchor="0.0"
+                                   AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="8.0">
+                            <items>
+                                <AnchorPane id="chatView">
+                                    <children>
+                                        <TextArea fx:id="chatBox" wrapText="true" AnchorPane.bottomAnchor="0.0"
+                                                  AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
+                                                  AnchorPane.topAnchor="0.0"/>
+                                    </children>
+                                </AnchorPane>
+                                <AnchorPane>
+                                    <children>
+                                        <TextField fx:id="writeBox" onAction="#onEnter" alignment="TOP_LEFT"
+                                                   focusTraversable="true" AnchorPane.bottomAnchor="24.0"
+                                                   AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
+                                                   AnchorPane.topAnchor="-3.0"/>
+                                        <Button id="send" mnemonicParsing="false" onAction="#sendButtonAction"
+                                                text="Send" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
+                                                AnchorPane.rightAnchor="1.0"/>
+                                    </children>
+                                </AnchorPane>
+                            </items>
+                        </SplitPane>
+                    </children>
+                </AnchorPane>
+                <AnchorPane>
+                    <children>
+                        <ListView fx:id="usersList" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
+                                  AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0"/>
+                    </children>
+                </AnchorPane>
+            </items>
+        </SplitPane>
+    </children>
+    <columnConstraints>
+        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0"/>
+    </columnConstraints>
+    <rowConstraints>
+        <RowConstraints minHeight="10.0" vgrow="SOMETIMES"/>
+    </rowConstraints>
+</GridPane>

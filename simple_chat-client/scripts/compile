@@ -3,22 +3,22 @@
 #
 # [ author: Krzysztof Baranski ]
 #
-#       SERVER ( compile and create jar )
+#       CLIENT ( compile and create jar )
 #
 #===============================================================
 
 script_path=$( readlink -f $0 )
 project_dir=$(readlink -f $(dirname $script_path)/..)
 current_dir=$(readlink -f $(pwd))
-project_name="chat-server"
+project_name="chat-client"
 build_dir="$project_dir/.build"
 source="$build_dir/source"
 manifest="$build_dir/manifest.txt"
-main_class='chat.server.Main'
+main_class='chat.client.view.ChatClient'
 
 echo "
 ---------------------------------------------------
--                 COMPILE SERVER                  -
+-                 COMPILE CLIENT                  -
 ---------------------------------------------------"
 
 #--------------------------------------------------------------| check java
@@ -95,7 +95,7 @@ then
 fi
 
 #--------------------------------------------------------------| copying properties file
-cp -v "$project_dir/config.properties" "$build_dir/$project_name"
+#cp -v "$project_dir/config.properties" "$build_dir/$project_name"
 
 #--------------------------------------------------------------| create jar
 echo "Creating jar..."
@@ -117,4 +117,4 @@ fi
 echo "---------------------------------------------------
 "
 
-echo "USAGE: java -jar $project_name.jar [ port ]"
+echo "USAGE: java -jar $project_name.jar server_addres server_port [ username ]"
