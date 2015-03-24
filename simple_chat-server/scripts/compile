@@ -1,0 +1,120 @@
+#!/bin/bash
+#===============================================================
+#
+# [ author: Krzysztof Baranski ]
+#
+#       CLIENT ( compile and create jar )
+#
+#===============================================================
+
+script_path=$( readlink -f $0 )
+project_dir=$(readlink -f $(dirname $script_path)/..)
+current_dir=$(readlink -f $(pwd))
+project_name="chat-server"
+build_dir="$project_dir/.build"
+source="$build_dir/source"
+manifest="$build_dir/manifest.txt"
+main_class='chat.server.Main'
+
+echo "
+---------------------------------------------------
+-                 COMPILE SERVER                  -
+---------------------------------------------------"
+
+#--------------------------------------------------------------| check java
+echo "Checking java compiler version..."
+if type -p javac; then
+    echo found java compiler in PATH
+    _javac=javac
+elif [[ -n "$JAVA_HOME" ]] && [[ -x "$JAVA_HOME/bin/javac" ]];  then
+    echo found java compiler in JAVA_HOME
+    _javac="$JAVA_HOME/bin/javac"
+else
+    echo "no java compiler"
+    exit 1
+fi
+
+if [[ "$_javac" ]]; then
+    version=$("$_javac" -version 2>&1 | awk '/javac/ {print $2}')
+    echo version "$version"
+    if [[ "$version" > "1.8" ]]; then
+        echo version is at least 1.8. OK
+    else
+        echo version is less than 1.8. FAIL
+        exit 1
+    fi
+fi
+
+echo "Checking jar executable version..."
+if type -p jar; then
+    echo found jar executable in PATH
+    _jar=jar
+elif [[ -n "$JAVA_HOME" ]] && [[ -x "$JAVA_HOME/bin/jar" ]];  then
+    echo found jar executable in JAVA_HOME
+    _jar="$JAVA_HOME/bin/jar"
+else
+    echo "no jar executable"
+    exit 1
+fi
+
+#--------------------------------------------------------------| remove build directory
+if [ -d $build_dir ]
+then
+	echo "Removing $build_dir directory"
+	rm -vrf "$build_dir"
+	if [ $? -eq 0 ]
+	then
+		echo "OK!"
+	fi
+fi
+
+#--------------------------------------------------------------| create new build/ directory
+mkdir -vp "$build_dir/$project_name"
+
+#--------------------------------------------------------------| find *.java files
+find "$project_dir/src" -name "*.java" > "$source"
+cat "$source"
+
+#--------------------------------------------------------------| compile project
+echo "Project compilation..."
+$_javac -d $build_dir/$project_name -cp "$project_dir/libs/*" "@$source"
+if [ $? -eq 0 ]
+then
+	echo "OK!"
+fi
+
+#--------------------------------------------------------------| remove old jar
+if [ -f "$current_dir/$project_name.jar" ]
+then
+	echo "Removing old jar file..."
+	rm -fv "$current_dir/$project_name.jar"
+	if [ $? -eq 0 ]
+	then
+		echo "OK!"
+	fi
+fi
+
+#--------------------------------------------------------------| copying properties file
+cp -v "$project_dir/config.properties" "$build_dir/$project_name"
+
+#--------------------------------------------------------------| create jar
+echo "Creating jar..."
+echo "Main-Class: $main_class" > "$manifest"
+$_jar cvfm "$current_dir/$project_name.jar" "$manifest" -C "$build_dir/$project_name" .
+if [ $? -eq 0 ]
+then
+	echo "OK!"
+fi
+
+#--------------------------------------------------------------| clean
+echo "Cleaning..."
+rm -vrf "$build_dir"
+if [ $? -eq 0 ]
+then
+	echo "OK!"
+fi
+
+echo "---------------------------------------------------
+"
+
+echo "USAGE: java -jar $project_name.jar [ port ]"
