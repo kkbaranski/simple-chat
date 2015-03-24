@@ -94,7 +94,8 @@ then
 	fi
 fi
 
-#--------------------------------------------------------------| copying properties file
+#--------------------------------------------------------------| copying fxml file
+cp -v "$project_dir/src/chat/client/view/main_window.fxml" "$build_dir/$project_name/chat/client/view/"
 #cp -v "$project_dir/config.properties" "$build_dir/$project_name"
 
 #--------------------------------------------------------------| create jar

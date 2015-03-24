@@ -17,9 +17,16 @@ public class MyProtocol implements Protocol
 	private static final Pattern namePattern = Pattern.compile( "(?<" + nameGroup + ">\\p{Alnum}+)" );
 	private static final Pattern messagePattern = Pattern.compile( "(?<" + messageGroup + ">.*)" );
 
-	private static final Pattern plainMessagePattern = Pattern.compile( "^<" + idPattern.pattern() + ":\\s*" + messagePattern
-			.pattern() + "\\s*$" );
-	private static final Pattern updateUserPattern = Pattern.compile( "^@" + idPattern.pattern() + "=" + namePattern.pattern() + "$" );
+	private static final Pattern plainMessagePattern = Pattern.compile( "^<" +
+	                                                                    idPattern.pattern() +
+	                                                                    ":\\s*" +
+	                                                                    messagePattern.pattern() +
+	                                                                    "\\s*$" );
+	private static final Pattern updateUserPattern = Pattern.compile( "^@" +
+	                                                                  idPattern.pattern() +
+	                                                                  "=" +
+	                                                                  namePattern.pattern() +
+	                                                                  "$" );
 	private static final Pattern removeUserPattern = Pattern.compile( "^~" + idPattern.pattern() + "$" );
 	private static final Pattern errorPattern = null;
 

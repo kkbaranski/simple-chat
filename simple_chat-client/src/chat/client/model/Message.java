@@ -30,9 +30,9 @@ public class Message
 	@Override
 	public String toString() {
 		return "Message{" +
-				"type=" + type +
-				", userId=" + userId +
-				", text='" + text + '\'' +
-				'}';
+		       "type=" + type +
+		       ", userId=" + userId +
+		       ", text='" + text + '\'' +
+		       '}';
 	}
 }

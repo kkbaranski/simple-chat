@@ -2,7 +2,6 @@ package chat.client.server;
 
 import chat.client.model.Message;
 import chat.client.model.Protocol;
-import chat.client.server.Server;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -32,13 +31,14 @@ public class MyServer implements Server
 			open();
 		} catch( IOException e ) {
 			logger.log( Level.SEVERE, e.getMessage(), e );
+			System.exit( 1 );
 		}
 		logger.info( "Server started." );
 		try {
 			String line;
 
 			sendMessage( helloMessage );
-			while( ( line = in.readLine() ) != null ) {
+			while( in != null && ( line = in.readLine() ) != null ) {
 				logger.info( "reading: " + line );
 				Message message = protocol.parseLine( line );
 				if( handler != null ) {

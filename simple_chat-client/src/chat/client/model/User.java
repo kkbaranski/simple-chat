@@ -44,9 +44,9 @@ public class User
 	@Override
 	public String toString() {
 		return "User{" +
-				"id=" + id +
-				", name='" + name + '\'' +
-				'}';
+		       "id=" + id +
+		       ", name='" + name + '\'' +
+		       '}';
 	}
 
 	private final int id;

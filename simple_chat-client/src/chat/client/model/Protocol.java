@@ -1,7 +1,5 @@
 package chat.client.model;
 
-import chat.client.model.Message;
-
 /**
  * @author Krzysztof Baranski
  */
