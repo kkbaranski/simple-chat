@@ -31,7 +31,6 @@ public class ChatClient extends Application
 		String serverAddress = rawArguments.get( 0 );
 		int serverPort = Integer.parseInt( rawArguments.get( 1 ) );
 		Protocol protocol = new MyProtocol();
-		String username = "";
 		if( rawArguments.size() == 3 ) {
 			username = rawArguments.get( 2 );
 		}
@@ -46,7 +45,7 @@ public class ChatClient extends Application
 	public void start( Stage primaryStage ) throws Exception {
 		FXMLLoader loader = new FXMLLoader( getClass().getResource( "main_window.fxml" ) );
 		Pane pane = loader.load();
-		primaryStage.setTitle( "Chat Client" );
+		primaryStage.setTitle( "Chat Client: " + username );
 		primaryStage.setScene( new Scene( pane, 300, 300 ) );
 		primaryStage.show();
 
@@ -61,6 +60,7 @@ public class ChatClient extends Application
 		launch( args );
 	}
 
+	private String username = "";
 	private Connector.ConnectorBuilder serverUIConnectorBuilder = Connector.builder();
 	private static final Logger logger = Logger.getLogger( ChatClient.class.getName() );
 }
